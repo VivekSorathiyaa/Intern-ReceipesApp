@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   customHeight(30),
                   PrimaryTextButton(
                     onPressed: () {
-                      Get.back();
+                      Get.to(() => CreateAccountScreen());
                       controller.loginUser(context, _formKey);
                     },
                     title: "Log in",
