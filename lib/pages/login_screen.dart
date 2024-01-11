@@ -9,6 +9,7 @@ import 'package:receipes/pages/create_account_screen.dart';
 import 'package:receipes/widget/auth_title_widget.dart';
 import 'package:receipes/widget/text_widgets/input_text_field_widget.dart';
 
+import '../components/colors.dart';
 import '../components/common_methos.dart';
 import '../components/static_decoration.dart';
 import '../widget/shadow_container_widget.dart';
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final controller = Get.put(AuthController());
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
 
   @override
   void initState() {
@@ -66,8 +68,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   customHeight(30),
                   PrimaryTextButton(
                     onPressed: () {
-                      Get.to(() => CreateAccountScreen());
-                      controller.loginUser(context, _formKey);
+                      if (controller.emailController.text.isEmpty) {
+                        CommonMethod()
+                            .getXSnackBar('Error', 'Please enter email', red);
+                      } else if (!emailRegex
+                          .hasMatch(controller.emailController.text)) {
+                        CommonMethod().getXSnackBar(
+                            'Error', 'Please enter valid email', red);
+                      } else if (controller.passwordController.text.isEmpty) {
+                        CommonMethod().getXSnackBar(
+                            'Error', 'Please enter password', red);
+                      } else {
+                        controller.signInWithEmailAndPassword(context);
+                      }
                     },
                     title: "Log in",
                   ),

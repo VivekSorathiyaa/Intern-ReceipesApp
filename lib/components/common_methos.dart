@@ -7,7 +7,7 @@ class CommonMethod {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  void getXSnackBar(String title, String message, Color? color) {
+  Future getXSnackBar(String title, String message, Color? color) async {
     Get.snackbar(
       title,
       message,
@@ -63,8 +63,6 @@ class CommonMethod {
         ext.endsWith(".3gp");
   }
 }
-
-
 
 // mov
 // webm
